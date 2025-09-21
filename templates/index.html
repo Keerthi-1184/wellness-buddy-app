@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wellness Buddy</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header>
+    <h1>🌸 Wellness Buddy</h1>
+    <p id="welcome-text">Welcome, <span id="user-name">Guest</span>!</p>
+  </header>
+
+  <main>
+    <!-- Section Selector -->
+    <nav class="tabs">
+      <button class="tab-btn active" data-section="motivation">Daily Motivation</button>
+      <button class="tab-btn" data-section="mood">Mood Tracker</button>
+      <button class="tab-btn" data-section="plan">Wellness Plan</button>
+      <button class="tab-btn" data-section="chat">Chatbot</button>
+    </nav>
+
+    <!-- Sections -->
+    <section id="motivation" class="section active">
+      <h2>🌞 Daily Motivation</h2>
+      <blockquote id="quote">Loading your motivational quote...</blockquote>
+    </section>
+
+    <section id="mood" class="section">
+      <h2>📝 Mood Tracker</h2>
+      <label for="mood-category">Mood Category:</label>
+      <select id="mood-category">
+        <option>Happy</option>
+        <option>Sad</option>
+        <option>Anxious</option>
+        <option>Calm</option>
+        <option>Stressed</option>
+      </select>
+
+      <label for="mood-score">Mood Score:</label>
+      <input type="range" id="mood-score" min="1" max="5" value="3">
+      <span id="score-display">3</span>
+
+      <button id="save-mood">Save Mood</button>
+      <div id="mood-history"></div>
+    </section>
+
+    <section id="plan" class="section">
+      <h2>📅 Personalized Wellness Plan</h2>
+      <button id="generate-plan">Generate Plan</button>
+      <pre id="plan-output"></pre>
+    </section>
+
+    <section id="chat" class="section">
+      <h2>💬 Chat with Wellness Buddy</h2>
+      <div id="chat-window"></div>
+      <div class="chat-input">
+        <input type="text" id="chat-message" placeholder="How are you feeling?">
+        <button id="send-message">Send</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

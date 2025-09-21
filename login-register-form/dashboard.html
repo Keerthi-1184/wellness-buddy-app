@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(90deg, #c9d6ff, #e2e2e2);
+    }
+    .dashboard {
+      text-align: center;
+    }
+    .dashboard h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .dashboard button {
+      padding: 10px 20px;
+      background: #6c63ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard">
+    <h1 id="greeting"></h1>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const user = localStorage.getItem("loginUser");
+    const now = new Date();
+    let greet = "Hello";
+
+    if (now.getHours() < 12) greet = "Good Morning";
+    else if (now.getHours() < 18) greet = "Good Afternoon";
+    else greet = "Good Evening";
+
+    document.getElementById("greeting").innerText = `${greet}, ${user}!`;
+
+    function logout() {
+      localStorage.removeItem("loginUser");
+      window.location.href = "index.html";
+
+      // Fake Local Database
+      let users = [];
+
+      document.getElementById("registerForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("regUsername").value.trim();
+        const email = document.getElementById("regEmail").value.trim();
+        const password = document.getElementById("regPassword").value.trim();
+
+        const exists = users.find(u => u.username === username);
+        if (exists) {
+          alert("❌ Username already exists!");
+          return;
+        }
+
+        users.push({ username, email, password });
+        alert("✅ Registration Successful!");
+        container.classList.remove("slide-register");
+      });
+
+      document.getElementById("loginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const username = document.getElementById("loginUsername").value.trim();
+        const password = document.getElementById("loginPassword").value.trim();
+
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+          if (rememberMe.checked) {
+            localStorage.setItem("savedUser", username);
+          } else {
+            localStorage.removeItem("savedUser");
+          }
+          localStorage.setItem("loginUser", username); // Store logged-in user
+          // Corrected redirection to the dashboard page served by FastAPI
+          window.location.href = "/dashboard";
+        } else {
+          alert("❌ Invalid Credentials!");
+        }
+      });
+    }
+  </script>
+</body>
+</html>
