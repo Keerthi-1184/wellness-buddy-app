@@ -9,12 +9,11 @@ import os
 import sys
 
 def main():
-    # Check if .env file exists
+    # Check if .env file exists (warn but do not exit, since platforms provide env vars)
     if not os.path.exists('.env'):
         print("⚠️  Warning: .env file not found!")
-        print("Please create a .env file with your API keys and configuration.")
-        print("You can copy .env.example to .env and fill in your values.")
-        return
+        print("Using environment variables from the hosting platform if available.")
+        print("If running locally, create a .env file or set env vars.")
     
     # Check if required directories exist
     required_dirs = ['templates', 'static', 'services', 'login-register-form']
@@ -30,10 +29,11 @@ def main():
     print("-" * 50)
     
     try:
+        port = int(os.getenv("PORT", "8000"))
         uvicorn.run(
             "app:app",
             host="0.0.0.0",
-            port=8000,
+            port=port,
             reload=True,
             log_level="info"
         )
