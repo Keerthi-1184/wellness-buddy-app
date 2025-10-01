@@ -115,15 +115,20 @@ class EmergencyEmailInput(BaseModel):
 # API Routes
 @app.get("/motivation")
 def get_motivation():
+    import random
     quotes = [
         "The best way to predict the future is to create it. – Peter Drucker",
         "You are enough just as you are. – Meghan Markle",
         "Happiness is not something ready-made. It comes from your own actions. – Dalai Lama",
         "Believe you can and you're halfway there. – Theodore Roosevelt",
-        "The only way to do great work is to love what you do. – Steve Jobs"
+        "The only way to do great work is to love what you do. – Steve Jobs",
+        "Small steps every day lead to big changes.",
+        "You’ve survived 100% of your worst days. Keep going.",
+        "Progress, not perfection.",
+        "Your feelings are valid. One breath at a time.",
+        "Be kind to yourself. You’re doing the best you can."
     ]
-    idx = time.localtime().tm_yday % len(quotes)
-    return {"quote": quotes[idx]}
+    return {"quote": random.choice(quotes)}
 
 @app.post("/mood")
 def save_mood(mood: MoodInput):
